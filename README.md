@@ -34,6 +34,9 @@ Open the project in a web browser.
 The latest cryptocurrency prices will be displayed.
 
 The tracker updates automatically.
+## 📷 Dashboard Preview
+
+![Cryptocurrency Price Tracker](FRONTPAGE.png)
 
 🔥 Future Enhancements
 
