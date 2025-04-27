@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #134e5e, #71b280);
+    color: #fff;
+}
+
+.whitepapers-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 5%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 20px;
+}
+
+nav ul {
+    flex: 1;
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #71b280;
+}
+
+nav .btn {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #71b280;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+nav .btn:hover {
+    background: #71b280;
+    color: #fff;
+}
+
+.whitepapers-header {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.whitepapers-header h1 {
+    font-size: 48px;
+    color: #71b280;
+    margin-bottom: 10px;
+}
+
+.whitepapers-header p {
+    font-size: 18px;
+    color: #b0b0b0;
+}
+
+.whitepapers-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.paper-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.paper-item h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.paper-item p {
+    font-size: 16px;
+    color: #b0b0b0;
+    margin-bottom: 15px;
+}
+
+.paper-item .btn {
+    display: inline-block;
+    background: #71b280;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+.paper-item .btn:hover {
+    background: #5e9a6b;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .whitepapers-container {
+        padding: 20px 3%;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    nav .btn {
+        margin-top: 10px;
+        padding: 6px 15px;
+    }
+
+    .whitepapers-header h1 {
+        font-size: 32px;
+    }
+
+    .whitepapers-header p {
+        font-size: 14px;
+    }
+
+    .paper-item {
+        min-width: 100%;
+        padding: 15px;
+    }
+
+    .paper-item h3 {
+        font-size: 18px;
+    }
+
+    .paper-item p {
+        font-size: 14px;
+    }
+
+    .paper-item .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .whitepapers-container {
+        padding: 20px 4%;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav ul li a {
+        font-size: 15px;
+    }
+
+    .whitepapers-header h1 {
+        font-size: 40px;
+    }
+
+    .whitepapers-header p {
+        font-size: 16px;
+    }
+
+    .paper-item {
+        max-width: 45%;
+    }
+}
+
+@media (min-width: 1024px) {
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    .whitepapers-header h1 {
+        font-size: 48px;
+    }
+
+    .whitepapers-header p {
+        font-size: 18px;
+    }
+
+    .paper-item {
+        max-width: 400px;
+    }
+}

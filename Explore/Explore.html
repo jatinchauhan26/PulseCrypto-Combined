@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Dashboard - Explore More</title>
+    <link rel="stylesheet" href="explore.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav>
+            <img src="../images/logo.png" class="logo">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Market/market.html">Market</a></li>
+                <li><a href="../Features/features.html">Features</a></li>
+                <li><a href="../WhitePapers/whitepapers.html">White Papers</a></li>
+                <li><a href="../AboutUs/aboutus.html">About Us</a></li>
+            </ul>
+            <a href="#" class="btn">EN</a>
+        </nav>
+        <div class="dashboard-header">
+            <h1>Explore Cryptocurrency Insights</h1>
+            <p>Dive deeper into market trends and analytics.</p>
+        </div>
+        <div class="crypto-table">
+            <h2>Cryptocurrency Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Coin</th>
+                        <th>Price (USD)</th>
+                        <th>Market Cap (USD)</th>
+                        <th>24h Volume (USD)</th>
+                        <th>24h Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bitcoin</td>
+                        <td id="btc-price"></td>
+                        <td id="btc-market-cap"></td>
+                        <td id="btc-volume"></td>
+                        <td id="btc-change"></td>
+                    </tr>
+                    <tr>
+                        <td>Ethereum</td>
+                        <td id="eth-price"></td>
+                        <td id="eth-market-cap"></td>
+                        <td id="eth-volume"></td>
+                        <td id="eth-change"></td>
+                    </tr>
+                    <tr>
+                        <td>Dogecoin</td>
+                        <td id="doge-price"></td>
+                        <td id="doge-market-cap"></td>
+                        <td id="doge-volume"></td>
+                        <td id="doge-change"></td>
+                    </tr>
+                    <tr>
+                        <td>Ripple</td>
+                        <td id="xrp-price"></td>
+                        <td id="xrp-market-cap"></td>
+                        <td id="xrp-volume"></td>
+                        <td id="xrp-change"></td>
+                    </tr>
+                    <tr>
+                        <td>Litecoin</td>
+                        <td id="ltc-price"></td>
+                        <td id="ltc-market-cap"></td>
+                        <td id="ltc-volume"></td>
+                        <td id="ltc-change"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="chart-section">
+            <h2>Bitcoin Price Trend (Last 7 Days)</h2>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="explore.js"></script>
+</body>
+</html>

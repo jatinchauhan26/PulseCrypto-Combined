@@ -6,7 +6,7 @@ This is a real-time Cryptocurrency Price Tracker built using HTML, CSS, and Java
 
 📌 Features
 
-🔄 Live price updates for Bitcoin, Ethereum, and Dogecoin.
+🔄 Live price updates for Bitcoin, Ethereum, and Dogecoin etc.
 
 📊 Real-time data fetching using the CoinGecko API.
 
@@ -37,6 +37,7 @@ The tracker updates automatically.
 ## 📷 Dashboard Preview
 
 ![Cryptocurrency Price Tracker](FRONTPAGE.png)
+![Cryptocurrency Price Tracker](GRAPHPAGE.png)
 
 🔥 Future Enhancements
 
