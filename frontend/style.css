@@ -32,7 +32,6 @@ body::before {
     100% { background-position: 0% 50%; }
 }
 
-
 /* ----------------- Aurora Waves ----------------- */
 body::after {
     content: "";
@@ -52,6 +51,62 @@ body::after {
     100% { transform: translate(-10%, -10%) rotate(20deg); }
 }
 
+/* ----------------- Settings Icon ----------------- */
+.settings {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+    z-index: 10000;
+    cursor: pointer;
+}
+
+.settings img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(20,20,50,0.9);
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(255,150,11,0.6);
+    transition: transform 0.3s;
+}
+
+.settings img:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.settings-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background: rgba(20,20,50,0.95);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    overflow: hidden;
+    text-align: left;
+    min-width: 140px;
+    z-index: 10001;
+}
+
+.settings-dropdown button {
+    width: 100%;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.settings-dropdown button:hover {
+    background: rgba(255,150,11,0.3);
+}
+.settings {
+    z-index: 2000; /* higher than overlay */
+}
+
+
 /* ----------------- Dark Floating Particles ----------------- */
 .particle {
     position: absolute;
@@ -70,11 +125,10 @@ body::after {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;  /* so it doesn’t block clicks */
+    pointer-events: none;
     overflow: hidden;
-    z-index: -1;           /* behind content */
+    z-index: -1;
 }
-
 
 @keyframes floatParticle {
     0%   { transform: translate(0,0) scale(0.8); opacity: 0.9; }
@@ -152,15 +206,15 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
-/* ----------------- Add Coin Dropdown (Upgraded) ----------------- */
+/* ----------------- Add Coin Dropdown ----------------- */
 .dropdown {
-    position: relative; /* parent relative for absolute positioning */
+    position: relative;
 }
 
 .dropdown-content {
-    display: none; /* hidden by default */
+    display: none;
     position: absolute;
-    top: 120%; /* below the button */
+    top: 120%;
     right: 0;
     background: linear-gradient(135deg, #330066, #ff960b);
     border-radius: 12px;
@@ -171,7 +225,6 @@ nav ul li a:hover::after {
     backdrop-filter: blur(6px);
 }
 
-/* Style for dynamically added buttons inside dropdown */
 .dropdown-content button {
     display: block;
     width: 100%;
@@ -193,12 +246,10 @@ nav ul li a:hover::after {
     border-left: 3px solid #ff960b;
 }
 
-/* Show dropdown when active */
 .dropdown.show .dropdown-content {
     display: block;
 }
 
-/* Add Coin Button Styles */
 #add-coin-btn {
     background: linear-gradient(135deg, #ff960b, #ff4d00);
     color: #fff;
@@ -215,6 +266,7 @@ nav ul li a:hover::after {
     background: linear-gradient(135deg, #ffb84d, #ff6600);
     transform: scale(1.05);
 }
+
 .dropdown-item {
     padding: 8px 15px;
     cursor: pointer;
@@ -224,16 +276,16 @@ nav ul li a:hover::after {
     color: #fff;
     transition: 0.3s;
 }
+
 .dropdown-item:hover {
     background: rgba(255, 150, 11, 0.3);
     transform: scale(1.05);
 }
+
 .dropdown-item img {
     width: 25px;
     height: 25px;
 }
-
-
 
 /* ----------------- Content ----------------- */
 .content {
@@ -461,7 +513,7 @@ nav ul li a:hover::after {
 .coin-float {
     position: absolute;
     width: 50px;
-    opacity: 0.8;
+    opacity: 0.5;
     animation: floatRandom linear infinite;
     filter: drop-shadow(0 0 15px rgba(255,150,11,0.7));
 }
@@ -472,111 +524,89 @@ nav ul li a:hover::after {
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
-
-/* ----------------- Login Overlay ---------------- */
+/* ----------------- Login Overlay (Always Centered) ----------------- */
 #login-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(270deg, #0d001f, #1a0033, #0d001f);
-    background-size: 600% 600%;
-    animation: gradientBG 25s ease infinite;
+    inset: 0;               /* shorthand for top:0; right:0; bottom:0; left:0 */
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgba(13, 0, 31, 0.95);
     z-index: 9999;
     overflow: hidden;
+    margin: 0;              /* prevent shifting due to body margins */
+    padding: 0;
 }
 
+/* Centered login box */
 .login-box {
     position: relative;
-    background: rgba(20, 20, 50, 0.95);
-    padding: 50px 60px;
+    background: rgba(20,20,50,0.95);
+    padding: 40px 30px;
     border-radius: 20px;
-    text-align: center;
-    z-index: 10;
-    box-shadow: 0 0 40px rgba(255,150,11,0.5), 0 0 80px rgba(255,150,11,0.3);
-    animation: fadeIn 1s ease forwards;
+    max-width: 460px;
+    width: 90%;
+    text-align: center ;
+    
+    box-shadow: 0 0 20px rgba(255,150,11,0.5), 0 0 80px rgba(255,150,11,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.login-box h2 {
+/* Force no shift during page load */
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; 
+}
+
+/* Close button */
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
     color: #ff960b;
-    font-size: 36px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px #ff960b;
-    opacity: 0;
-    animation: fadeInText 1s forwards;
-    animation-delay: 0.2s;
 }
 
-.login-box p {
-    color: #fff;
-    font-size: 16px;
-    margin-bottom: 25px;
-    opacity: 0;
-    animation: fadeInText 1s forwards;
-    animation-delay: 0.4s;
-}
-
+/* Inputs and buttons */
 .login-box input {
     width: 100%;
-    padding: 14px 15px;
-    border-radius: 12px;
+    padding: 12px 15px;
+    border-radius: 10px;
     border: none;
-    margin-bottom: 20px;
     font-size: 16px;
     background: rgba(255,255,255,0.05);
     color: #fff;
-    box-shadow: 0 0 10px rgba(255,255,255,0.1) inset;
-    opacity: 0;
-    animation: fadeInText 1s forwards;
-    animation-delay: 0.6s;
-}
-
-.login-box input::placeholder {
-    color: #ccc;
 }
 
 .login-box button {
     width: 100%;
     padding: 12px;
-    background: #ff960b;
-    border: none;
     border-radius: 10px;
+    border: none;
+    background: #ff960b;
     color: #fff;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255,150,11,0.3);
-    opacity: 0;
-    animation: fadeInText 1s forwards;
-    animation-delay: 0.8s;
 }
 
 .login-box button:hover {
     background: #e67e00;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255,150,11,0.6);
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
+/* Responsive */
+@media (max-width: 767px) {
+    .login-box { width: 90%; padding: 30px 20px; }
+    #close-modal { top: 8px; right: 12px; font-size: 24px; }
+    .login-box input, .login-box button { font-size: 16px; padding: 10px 12px; }
 }
 
-@keyframes fadeInText {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
 
 /* ----------------- Responsive ----------------- */
 @media (max-width: 767px) {
@@ -598,24 +628,67 @@ nav ul li a:hover::after {
     .coin h3 { font-size: 16px; }
     .coin p { font-size: 12px; }
 
-    #add-coin-btn {
-        width: 100%;
-        margin-top: 10px;
-        padding: 10px 0;
-        font-size: 16px;
-    }
+    #add-coin-btn { width: 100%; margin-top: 10px; padding: 10px 0; font-size: 16px; }
 
-    .modal-content {
-        padding: 20px;
+    .modal-content { padding: 20px; max-width: 90%; }
+    .coin-selection .coin-item img { width: 25px; height: 25px; }
+    .coin-selection .coin-item span { font-size: 14px; }
+
+    .login-box {
+        padding: 30px 20px;
         max-width: 90%;
     }
 
-    .coin-selection .coin-item img {
-        width: 25px;
-        height: 25px;
-    }
+    .login-box h2 { font-size: 26px; }
+    .login-box p { font-size: 14px; }
+    .login-box input, .login-box button { font-size: 16px; padding: 10px 12px; }
+    #close-modal { top: 8px; right: 12px; font-size: 24px; }
+}
 
-    .coin-selection .coin-item span {
-        font-size: 14px;
-    }
+
+#toast-container {
+    position: fixed;
+    top: 90px;       /* top of the page */
+    right: 20px;     /* distance from right */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;       /* space between toasts */
+    z-index: 10000;
+}
+
+.toast {
+    padding: 12px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease;
+    backdrop-filter: blur(6px); /* blurs background behind toast */
+    color: #fff;
+}
+
+/* Different types of toasts */
+.toast.info {
+    background: rgba(0, 123, 255, 0.85);  /* blue */
+}
+
+.toast.success {
+    background: rgba(40, 167, 69, 0.85);  /* green */
+}
+
+.toast.warning {
+    background: rgba(255, 193, 7, 0.85);  /* yellow */
+}
+
+.toast.error {
+    background: rgba(220, 53, 69, 0.85);  /* red */
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.toast {
+    white-space: pre-line; /* preserves \n line breaks */
 }

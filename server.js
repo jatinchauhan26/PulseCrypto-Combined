@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const path = require("path");
-const Parser = require("rss-parser"); // RSS parser
+const Parser = require("rss-parser");
 require("dotenv").config();
 
 const app = express();
@@ -15,32 +15,44 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public"))); // Serve frontend
 
 // ---------- Nodemailer setup ----------
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        pass: process.env.EMAIL_PASS // Use App Password if 2FA enabled
     },
     tls: { rejectUnauthorized: false }
 });
 
 transporter.verify((error, success) => {
-    if (error) console.log("Email transporter error:", error);
+    if (error) console.error("Email transporter error:", error);
     else console.log("Email transporter ready");
 });
+
+// ---------- Helper: validate email ----------
+function isValidEmail(email) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(email);
+}
+
 
 // ---------- POST route for sending alerts ----------
 app.post("/send-alert", (req, res) => {
     const { coin, currentPrice, targetPrice, userEmail } = req.body;
+
     if (!coin || !currentPrice || !targetPrice || !userEmail) {
         return res.status(400).json({ message: "Missing data" });
+    }
+
+    if (!isValidEmail(userEmail)) {
+        return res.status(400).json({ message: "Invalid email address" });
     }
 
     const mailOptions = {
         from: `"PulseCrypto Alerts" <${process.env.EMAIL_USER}>`,
         to: userEmail,
         subject: `Crypto Alert: ${coin} reached your target!`,
-        text: `${coin} reached $${currentPrice}, your target was $${targetPrice}`
+        text: `${coin} has reached $${currentPrice}, your target was $${targetPrice}.`
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
@@ -59,7 +71,6 @@ let cachedNews = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-
 app.get("/api/news", async (req, res) => {
     try {
         const now = Date.now();
@@ -68,14 +79,13 @@ app.get("/api/news", async (req, res) => {
         }
 
         const feed = await parser.parseURL("https://www.coindesk.com/arc/outboundfeeds/rss/");
-      const news = feed.items.map(item => ({
-    title: item.title,
-    url: item.link,
-    publishedDate: item.pubDate,
-    contentSnippet: item.contentSnippet || "",
-    source: "CoinDesk"
-}));
-
+        const news = feed.items.map(item => ({
+            title: item.title,
+            url: item.link,
+            publishedDate: item.pubDate,
+            contentSnippet: item.contentSnippet || "",
+            source: "CoinDesk"
+        }));
 
         cachedNews = news;
         cacheTimestamp = now;

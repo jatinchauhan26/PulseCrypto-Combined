@@ -8,10 +8,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const addCoinDropdown = document.getElementById("add-coin-dropdown");
     const coinList = document.querySelector(".coin-list");
     const particlesWrapper = document.getElementById("particles-wrapper");
+    const changeEmailBtn = document.getElementById("change-email-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    // ---------------- Toast popup ----------------
+    function showToast(message, duration = 5000) {
+        const container = document.getElementById("toast-container") || (() => {
+            const c = document.createElement("div");
+            c.id = "toast-container";
+            document.body.appendChild(c);
+            return c;
+        })();
+
+        const toast = document.createElement("div");
+        toast.classList.add("toast");
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add("show"), 10);
+        setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => container.removeChild(toast), 500);
+        }, duration);
+    }
+
+    // ---------------- Overlay ----------------
+    function showOverlay() { overlay.style.display = "flex"; }
+    function hideOverlay() { overlay.style.display = "none"; }
 
     // ---------------- Data ----------------
     let alerts = {};
     let coinSockets = {};
+    let emailAlertShown = false;
+    let firedAlerts = {}; // Track alerts already fired to prevent duplicates
 
     let coins = {
         bitcoin: { el: document.getElementById("bitcoin-card"), symbol: "btcusdt", decimals: 2 },
@@ -36,23 +65,63 @@ document.addEventListener("DOMContentLoaded", () => {
         vechain:   { symbol: "vetusdt",   decimals: 4, img: "vechain.png" }
     };
 
-    // ---------------- Overlay Login ----------------
+    // ---------------- Email Validation ----------------
+    function isValidEmail(email) {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(email);
+    }
+
+    // ---------------- Overlay & Login ----------------
     const savedEmail = localStorage.getItem("userEmail");
-    if (savedEmail) {
+    if (savedEmail && isValidEmail(savedEmail)) {
         window.userEmail = savedEmail;
-        overlay.style.display = "none";
+        hideOverlay();
     } else {
-        overlay.style.display = "block";
+        showOverlay();
     }
 
     loginBtn.addEventListener("click", () => {
         const email = loginEmailInput.value.trim();
-        if (!email) return alert("Please enter a valid email");
+        if (!email || !isValidEmail(email)) return showToast("Please enter a valid email address");
 
         localStorage.setItem("userEmail", email);
         window.userEmail = email;
-        overlay.style.display = "none";
-        alert(`Notifications will be sent to ${email}`);
+        hideOverlay();
+        emailAlertShown = false;
+        showToast(`Notifications will be sent to ${email}`);
+    });
+
+    if (changeEmailBtn) {
+        changeEmailBtn.addEventListener("click", () => {
+            localStorage.removeItem("userEmail");
+            window.userEmail = null;
+            showOverlay();
+            showToast("Your email has been cleared. Please login again.");
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("userEmail");
+            window.userEmail = null;
+            showToast("You have been logged out.");
+        });
+    }
+
+    // ---------------- Settings Dropdown ----------------
+    const settingsIcon = document.querySelector('.settings img');
+    const settingsDropdown = document.getElementById('settings-dropdown');
+
+    settingsIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        settingsDropdown.style.display =
+            (settingsDropdown.style.display === 'block') ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!settingsIcon.contains(e.target) && !settingsDropdown.contains(e.target)) {
+            settingsDropdown.style.display = 'none';
+        }
     });
 
     // ---------------- Floating Coins ----------------
@@ -91,22 +160,41 @@ document.addEventListener("DOMContentLoaded", () => {
         particlesWrapper.appendChild(particle);
     }
 
-    // ---------------- Alerts & Remove ----------------
+    // ---------------- Alerts ----------------
     function attachCoinFunctions(coinCard, coinId) {
-        const btn = coinCard.querySelector(".alert-btn");
+        let btn = coinCard.querySelector(".alert-btn");
         const input = coinCard.querySelector(".alert-input");
 
+        // Replace button to clear old listeners
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        btn = newBtn;
+
+        // --- Alert setting ---
         btn.addEventListener("click", () => {
             const target = parseFloat(input.value);
-            if (isNaN(target)) return alert("Enter a valid number");
+            if (isNaN(target)) return showToast("Enter a valid number");
+
             alerts[coinId] = target;
-            alert(`Alert set for ${coinId} at $${target}`);
+            firedAlerts[coinId] = false; // reset fired flag
+            showToast(`Alert set for ${coinId} at $${target}`);
+
+            // Immediate check if price already above target
+            const priceEl = coinCard.querySelector(`#${coinId}`);
+            if (priceEl) {
+                const currentPrice = parseFloat(priceEl.textContent.replace('$',''));
+                if (!isNaN(currentPrice) && currentPrice >= target) {
+                    triggerCoinAlert(coinId, currentPrice, target);
+                }
+            }
         });
 
+        // --- Remove button logic ---
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
         removeBtn.classList.add("remove-btn");
-        removeBtn.style.cssText = "margin-top:8px;background:#f44336;color:#fff;border:none;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;";
+        removeBtn.style.cssText =
+            "margin-top:8px;background:#f44336;color:#fff;border:none;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;";
         coinCard.querySelector("div").appendChild(removeBtn);
 
         removeBtn.addEventListener("click", () => {
@@ -115,46 +203,54 @@ document.addEventListener("DOMContentLoaded", () => {
             coinCard.remove();
             delete coins[coinId];
             delete alerts[coinId];
+            delete firedAlerts[coinId];
         });
     }
 
     Object.keys(coins).forEach(key => attachCoinFunctions(coins[key].el, key));
 
     // ---------------- WebSocket ----------------
+    function triggerCoinAlert(coinId, priceNum, target) {
+        if (firedAlerts[coinId]) return; // prevent double firing
+        firedAlerts[coinId] = true;
+        delete alerts[coinId]; // remove immediately
+
+        if (window.userEmail) {
+            fetch("http://localhost:3000/send-alert", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    coin: coinId,
+                    currentPrice: priceNum,
+                    targetPrice: target,
+                    userEmail: window.userEmail
+                })
+            }).catch(err => console.error(err));
+
+            showToast(`${coinId} reached $${priceNum}! Email sent to ${window.userEmail}`);
+        } else {
+            showToast(`${coinId} reached $${priceNum}! \n Set your email in the overlay to receive alerts.`);
+            emailAlertShown = true;
+        }
+    }
+
     function connectCoinWS(coinId) {
         const coin = coins[coinId];
         if (!coin) return;
-        if (coinSockets[coinId]) coinSockets[coinId].close();
+
+        if (coinSockets[coinId] && coinSockets[coinId].readyState === WebSocket.OPEN) return;
 
         const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${coin.symbol}@ticker`);
         coinSockets[coinId] = ws;
 
         ws.onmessage = event => {
             const data = JSON.parse(event.data);
-            const price = parseFloat(data.c).toFixed(coin.decimals);
-            const change = parseFloat(data.P).toFixed(2);
-
+            const priceNum = parseFloat(data.c).toFixed(coin.decimals);
             const priceEl = coin.el.querySelector(`#${coinId}`);
-            const changeEl = coin.el.querySelector(".change");
+            priceEl.textContent = `$${priceNum}`;
 
-            priceEl.textContent = `$${price}`;
-            changeEl.textContent = `(${change}%)`;
-            changeEl.style.color = change >= 0 ? "#4caf50" : "#f44336";
-
-            if (alerts[coinId] !== undefined && parseFloat(price) >= alerts[coinId]) {
-                if (!window.userEmail) return alert("Set your email in the overlay to receive alerts!");
-                fetch("http://localhost:3000/send-alert", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        coin: coinId,
-                        currentPrice: price,
-                        targetPrice: alerts[coinId],
-                        userEmail: window.userEmail
-                    })
-                }).then(res => res.json()).catch(err => console.error(err));
-                alert(`${coinId} reached $${price}! Email sent to ${window.userEmail}`);
-                delete alerts[coinId];
+            if (alerts[coinId] !== undefined && priceNum >= alerts[coinId]) {
+                triggerCoinAlert(coinId, priceNum, alerts[coinId]);
             }
         };
     }
@@ -174,7 +270,8 @@ document.addEventListener("DOMContentLoaded", () => {
         availableCoins.forEach(coinKey => {
             const option = document.createElement("div");
             option.classList.add("dropdown-item");
-            option.innerHTML = `<img src="/images/${newCoins[coinKey].img}" alt="${coinKey}" style="width:25px;height:25px;margin-right:8px;"><span>${coinKey.charAt(0).toUpperCase()+coinKey.slice(1)}</span>`;
+            option.innerHTML =
+                `<img src="/images/${newCoins[coinKey].img}" alt="${coinKey}" style="width:25px;height:25px;margin-right:8px;"><span>${coinKey.charAt(0).toUpperCase()+coinKey.slice(1)}</span>`;
             addCoinDropdown.appendChild(option);
 
             option.addEventListener("click", () => {
@@ -195,7 +292,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 coinList.appendChild(coinCard);
 
-                coins[coinKey] = { el: coinCard, symbol: newCoins[coinKey].symbol, decimals: newCoins[coinKey].decimals };
+                coins[coinKey] = {
+                    el: coinCard,
+                    symbol: newCoins[coinKey].symbol,
+                    decimals: newCoins[coinKey].decimals
+                };
                 attachCoinFunctions(coinCard, coinKey);
                 connectCoinWS(coinKey);
                 updateAddCoinDropdown();
@@ -214,5 +315,4 @@ document.addEventListener("DOMContentLoaded", () => {
             addCoinDropdown.parentElement.classList.remove("show");
         }
     });
-
 });
