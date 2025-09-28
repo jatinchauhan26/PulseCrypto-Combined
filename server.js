@@ -7,12 +7,13 @@ const Parser = require("rss-parser");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ---------------- Middleware ----------------
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public"))); // Serve frontend
+app.use(express.static(path.join(__dirname, "public")));   // Public assets
+app.use(express.static(path.join(__dirname, "frontend"))); // SPA frontend
 
 // ---------- Nodemailer setup ----------
 const transporter = nodemailer.createTransport({
@@ -34,7 +35,6 @@ function isValidEmail(email) {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(email);
 }
-
 
 // ---------- POST route for sending alerts ----------
 app.post("/send-alert", (req, res) => {
@@ -94,6 +94,12 @@ app.get("/api/news", async (req, res) => {
         console.error("Error fetching RSS news:", error);
         res.status(500).json({ error: "Failed to fetch news" });
     }
+});
+
+// ---------- Catch-all route for SPA ----------
+// Must be last so API routes still work
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
 // ---------- Start server ----------
