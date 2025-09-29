@@ -287,6 +287,20 @@ nav ul li a:hover::after {
     height: 25px;
 }
 
+/* ----------------- Mobile tweaks for Add Coin dropdown ----------------- */
+@media (max-width: 767px) {
+    .dropdown-content {
+        min-width: 150px;  /* smaller for phone */
+        left: 10px;        /* make sure it doesn't go off-screen */
+        right: 10px;       /* fallback to keep it centered-ish */
+    }
+
+    .dropdown-content button {
+        padding: 8px 12px; /* smaller padding for touch screens */
+        font-size: 14px;   /* smaller font */
+    }
+}
+ 
 /* ----------------- Content ----------------- */
 .content {
     max-width: 800px;
@@ -691,4 +705,53 @@ body, html {
 }
 .toast {
     white-space: pre-line; /* preserves \n line breaks */
+}
+@media (max-width: 400px) {
+    #toast-container {
+        right: 10px;
+        left: 10px;
+    }
+    .toast { width: auto; max-width: calc(100% - 20px); }
+}
+
+/* ----------------- Ultra-small phone adjustments ----------------- */
+@media (max-width: 360px) {
+
+    /* Coin Cards */
+    .coin {
+        min-width: 140px;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+    .coin img {
+        width: 35px;
+        height: 35px;
+    }
+    .coin h3 { font-size: 14px; }
+    .coin p { font-size: 11px; }
+
+    /* Content Section */
+    .content h1 { font-size: 32px; line-height: 1.2; }
+    .content p { font-size: 13px; line-height: 20px; }
+    .content .btn { padding: 10px 30px; font-size: 14px; }
+
+    /* Settings Icon */
+    .settings { right: 15px; bottom: 15px; }
+    .settings img { width: 45px; height: 45px; padding: 6px; }
+
+    /* Add Coin Button */
+    #add-coin-btn { font-size: 14px; padding: 10px 0; }
+
+    /* Login Box / Modal */
+    .login-box, .modal-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+    .login-box h2 { font-size: 24px; }
+    .login-box input, .login-box button { font-size: 15px; padding: 8px 10px; }
+    #close-modal { top: 6px; right: 10px; font-size: 22px; }
+
+    /* Coin Selection in Modal */
+    .coin-selection .coin-item img { width: 25px; height: 25px; }
+    .coin-selection .coin-item span { font-size: 13px; }
 }
