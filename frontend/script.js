@@ -216,16 +216,17 @@ document.addEventListener("DOMContentLoaded", () => {
         delete alerts[coinId]; // remove immediately
 
         if (window.userEmail) {
-            fetch("http://localhost:3000/send-alert", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    coin: coinId,
-                    currentPrice: priceNum,
-                    targetPrice: target,
-                    userEmail: window.userEmail
-                })
-            }).catch(err => console.error(err));
+       fetch("/send-alert", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        coin: coinId,
+        currentPrice: priceNum,
+        targetPrice: target,
+        userEmail: window.userEmail
+    })
+})
+.catch(err => console.error(err));
 
             showToast(`${coinId} reached $${priceNum}! Email sent to ${window.userEmail}`);
         } else {

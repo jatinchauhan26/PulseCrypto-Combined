@@ -14,6 +14,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));   // Public assets
 app.use(express.static(path.join(__dirname, "frontend"))); // SPA frontend
+app.use(express.static(path.join(__dirname, "frontend", "public")));
+
 
 // ---------- Nodemailer setup ----------
 const transporter = nodemailer.createTransport({
