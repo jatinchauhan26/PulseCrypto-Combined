@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------- Fetch News ----------------
   async function fetchNews() {
     try {
-      const res = await fetch("http://localhost:3000/api/news");
+      const res = await fetch("/api/news"); // <- relative URL for backend
       const data = await res.json();
       renderNews(data);
     } catch (err) {
@@ -68,8 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     carousel.scrollBy({ left: carousel.offsetWidth, behavior: "smooth" });
   }, 8000);
 
-
-// ---------------- Auto Refresh News ----------------
-fetchNews(); // initial load
-setInterval(fetchNews, 5 * 60 * 1000); // refresh every 5 minutes
+  // ---------------- Auto Refresh News ----------------
+  fetchNews(); // initial load
+  setInterval(fetchNews, 5 * 60 * 1000); // refresh every 5 minutes
 });
