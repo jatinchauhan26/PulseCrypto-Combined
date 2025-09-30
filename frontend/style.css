@@ -157,7 +157,8 @@ nav {
 }
 
 .logo {
-    width: 60px;
+    width: 53px;
+    margin-left: -30px;
     cursor: pointer;
     filter: drop-shadow(0 0 15px rgba(255,150,11,0.6));
     transition: transform 0.3s ease;
@@ -209,6 +210,7 @@ nav ul li a:hover::after {
 /* ----------------- Add Coin Dropdown ----------------- */
 .dropdown {
     position: relative;
+    
 }
 
 .dropdown-content {
@@ -223,6 +225,7 @@ nav ul li a:hover::after {
     z-index: 999;
     padding: 10px 0;
     backdrop-filter: blur(6px);
+    right: -60px; /* move entire box 50px to the right */
 }
 
 .dropdown-content button {
@@ -252,7 +255,7 @@ nav ul li a:hover::after {
 
 #add-coin-btn {
     background: linear-gradient(135deg, #ff960b, #ff4d00);
-    color: #fff;
+     color: white;
     border: none;
     border-radius: 25px;
     padding: 10px 25px;
@@ -260,6 +263,7 @@ nav ul li a:hover::after {
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(255,150,11,0.4);
+    margin-right : -40px;
 }
 
 #add-coin-btn:hover {
@@ -415,11 +419,12 @@ nav ul li a:hover::after {
 
 #add-coin-btn {
     background: #ff960b;
-    color: #fff;
+    color: blue\;
     border: none;
     border-radius: 25px;
     padding: 10px 25px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 5px 15px rgba(255,150,11,0.4);
@@ -754,4 +759,26 @@ body, html {
     /* Coin Selection in Modal */
     .coin-selection .coin-item img { width: 25px; height: 25px; }
     .coin-selection .coin-item span { font-size: 13px; }
+}
+/* ----------------- Bottom Left Logo ----------------- */
+.bottom-left-logo {
+    position: fixed;
+    bottom: 20px;
+    left: 50px; /* distance from left */
+    z-index: 10000;
+    cursor: pointer;
+}
+
+.bottom-left-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(20,20,50,0.9);
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(255,150,11,0.6);
+    transition: transform 0.3s;
+}
+
+.bottom-left-logo img:hover {
+    transform: scale(1.1) rotate(10deg);
 }
