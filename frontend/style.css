@@ -782,3 +782,69 @@ body, html {
 .bottom-left-logo img:hover {
     transform: scale(1.1) rotate(10deg);
 }
+/* ----------------- Mobile Logo Adjustments ----------------- */
+@media (max-width: 767px) {
+
+    /* Bottom-left logo */
+    .bottom-left-logo {
+        left: 10px;          /* shift fully to left corner */
+        bottom: 10px;        /* slightly above edge */
+    }
+
+    /* Settings icon (bottom-right) */
+    .settings {
+        right: 10px;         /* more right corner */
+        bottom: 10px;
+    }
+
+    /* Main logo (top) */
+    .logo {
+        width: 50px;         /* same size as other logos */
+        margin-left: 1px;   /* shift slightly right to align with bottom-left */
+        margin-bottom: 15px;
+    }
+
+    /* Optional: reduce nav padding on top for small screens */
+    nav {
+        padding: 15px 10px;
+    }
+}
+@media (max-width: 767px) {
+    /* Keep logo fixed left and same size */
+    nav .logo {
+        margin-right: 15px;
+        flex-shrink: 0;      /* prevents shrinking */
+        position: relative;  /* ensures it stays inline with nav */
+        top: 0;              /* optional: adjust if you want slightly lower */
+    }
+
+    /* Nav links in a row, wrapping if necessary */
+    nav ul {
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        align-items: flex-start; /* aligns links slightly upwards */
+    }
+
+    nav ul li a {
+        font-size: 14px;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    /* Add Coin button full width below nav links */
+    .add-coin-wrapper {
+        flex-basis: 100%;       /* full width below nav links */
+        margin-top: 5px;        /* small spacing */
+        display: flex;
+        justify-content: flex-start;  /* aligns left */
+        align-items: center;
+    }
+
+    #add-coin-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}

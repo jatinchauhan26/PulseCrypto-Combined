@@ -314,3 +314,32 @@ nav .btn:hover {
         padding: 20px;
     }
 }
+@media (max-width: 767px) {
+    nav {
+        flex-direction: row;       /* keep row layout */
+        flex-wrap: wrap;           /* allow wrapping if needed */
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 10px;
+    }
+
+    nav ul {
+        flex-direction: row;       /* keep links horizontal */
+        flex-wrap: wrap;           /* allow wrapping on very small screens */
+        margin-top: 0;
+    }
+
+    nav ul li {
+        margin: 0 8px;             /* reduce spacing */
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    nav .btn {
+        margin-top: 0;             /* keep button inline */
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}

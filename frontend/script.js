@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeEmailBtn = document.getElementById("change-email-btn");
     const logoutBtn = document.getElementById("logout-btn");
 
+    // Automatically switch between local backend and deployed backend
+const BACKEND_URL = window.location.hostname === "localhost" 
+    ? "http://localhost:3000"  // local backend
+    : "https://your-backend-on-render.onrender.com"; // replace with your Render URL
+
+
     // ---------------- Toast popup ----------------
     function showToast(message, duration = 5000) {
         const container = document.getElementById("toast-container") || (() => {
@@ -216,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
         delete alerts[coinId]; // remove immediately
 
         if (window.userEmail) {
-       fetch("/send-alert", {
+   fetch(`${BACKEND_URL}/send-alert`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -227,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 .catch(err => console.error(err));
+
 
             showToast(`${coinId} reached $${priceNum}! Email sent to ${window.userEmail}`);
         } else {

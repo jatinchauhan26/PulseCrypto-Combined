@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const leftBtn = document.querySelector(".carousel-btn.left");
   const rightBtn = document.querySelector(".carousel-btn.right");
 
+  // ---------------- BACKEND URL ----------------
+  const BACKEND_URL =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3000" // local backend
+      : "https://your-backend-on-render.onrender.com"; // deployed backend
+
   // ---------------- Floating Particles ----------------
   const particlesWrapper = document.getElementById("particles");
   for (let i = 0; i < 80; i++) {
@@ -19,10 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
     particlesWrapper.appendChild(particle);
   }
 
+  // ---------------- Coin Tag Map ----------------
+  const coinMap = {
+    BTC: "Bitcoin",
+    ETH: "Ethereum",
+    XRP: "Ripple",
+    LTC: "Litecoin",
+    DOGE: "Dogecoin",
+    Bitcoin: "Bitcoin",
+    Ethereum: "Ethereum",
+    Ripple: "Ripple",
+    Litecoin: "Litecoin",
+    Dogecoin: "Dogecoin",
+  };
+
   // ---------------- Fetch News ----------------
   async function fetchNews() {
     try {
-      const res = await fetch("/api/news"); // <- relative URL for backend
+      const res = await fetch(`${BACKEND_URL}/api/news`);
       const data = await res.json();
       renderNews(data);
     } catch (err) {
@@ -40,10 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
       item.classList.add("news-item");
 
       // Detect coin from title
-      let coinMatch = news.title.match(
+      const coinMatch = news.title.match(
         /Bitcoin|Ethereum|ETH|BTC|Ripple|XRP|Litecoin|LTC|Dogecoin|DOGE/i
       );
-      let coinTag = coinMatch ? coinMatch[0] : "General";
+      const coinTag = coinMatch
+        ? coinMap[coinMatch[0].toUpperCase()] || coinMatch[0]
+        : "General";
 
       item.innerHTML = `
         <div class="news-tag">${coinTag} | ${news.source}</div>
@@ -64,11 +86,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ---------------- Auto Slide ----------------
-  setInterval(() => {
+  let autoSlide = setInterval(() => {
     carousel.scrollBy({ left: carousel.offsetWidth, behavior: "smooth" });
   }, 8000);
 
-  // ---------------- Auto Refresh News ----------------
+  carousel.addEventListener("mouseenter", () => clearInterval(autoSlide));
+  carousel.addEventListener("mouseleave", () => {
+    autoSlide = setInterval(() => {
+      carousel.scrollBy({ left: carousel.offsetWidth, behavior: "smooth" });
+    }, 8000);
+  });
+
+  // ---------------- Initial Fetch & Auto Refresh ----------------
   fetchNews(); // initial load
   setInterval(fetchNews, 5 * 60 * 1000); // refresh every 5 minutes
 });
