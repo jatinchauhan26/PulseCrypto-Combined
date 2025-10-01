@@ -30,4 +30,10 @@ dist-ssr/
 *.sw?
 
 
+../backend/
+../backend-clean/
+../backend-fix/
+../backend/
 backend/
+..backend*/
+ 
