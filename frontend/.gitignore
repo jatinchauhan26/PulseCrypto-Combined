@@ -30,10 +30,4 @@ dist-ssr/
 *.sw?
 
 
-# Backend files (if any accidentally included)
-../backend/
-
-*.json
-*.md
-server.js
-
+backend/
