@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Automatically switch between local backend and deployed backend
 const BACKEND_URL = window.location.hostname === "localhost" 
     ? "http://localhost:3000"  // local backend
-    : "https://pulsecrypto-backend.onrender.com/"; // replace with your Render URL
+    : "https://pulsecrypto-backend.onrender.com"; // replace with your Render URL
 
 
     // ---------------- Toast popup ----------------

@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // ---------------- Middleware ----------------
 const FRONTEND_URLS = [
-    'https://pulse-crypto-frontend-x34v.vercel.app',
+    'https://pulse-crypto-frontend-x34v-gvt2feyk0.vercel.app',
     'http://localhost:5500' // if you serve frontend locally
 ];
 
@@ -22,7 +22,7 @@ app.use(cors({
         if (!origin || FRONTEND_URLS.includes(origin)) return callback(null, true);
         callback(new Error('Not allowed by CORS'));
     },
-    methods: ['GET','POST']
+    methods: ['GET', 'POST']
 }));
 
 app.use(bodyParser.json());
