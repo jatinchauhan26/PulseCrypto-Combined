@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseCrypto Alerts</title>
+    <link rel="icon" href="images/mainlogo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+ 
+<!-- Login Overlay with Floating Coins -->
+<div id="login-overlay">
+    <div class="floating-coins">
+        <img src="/images/bitcoin.png" class="coin-float">
+        <img src="/images/ethereum.png" class="coin-float">
+        <img src="/images/dogecoin.png" class="coin-float">
+        <img src="/images/ripple.jpeg" class="coin-float">
+        <img src="/images/LITECOIN.png" class="coin-float">
+        <img src="/images/algorand.png" class="coin-float">
+        <img src="/images/avalanche.png" class="coin-float">
+        <img src="/images/bnb.png" class="coin-float">
+        <img src="/images/cardano.png" class="coin-float">
+        <img src="/images/chainlink.png" class="coin-float">
+        <img src="/images/cosmos.png" class="coin-float">
+        <img src="/images/filecoin.png" class="coin-float">
+        <img src="/images/polkadot.png" class="coin-float">
+        <img src="/images/solana.png" class="coin-float">
+        <img src="/images/tron.png" class="coin-float">
+        <img src="/images/uniswap.png" class="coin-float">
+        <img src="/images/vechain.png" class="coin-float">
+    </div>
+
+    <div class="login-box">
+        <h2>Welcome to PulseCrypto </h2>
+        <p>Enter your email to continue</p>
+        <input type="email" id="login-email" placeholder="Your email..." />
+        <button id="login-btn">Continue</button>
+    </div>
+</div>
+
+<div class="container">
+    <nav>
+        <img src="/images/logo.png" class="logo">
+        <ul>
+            <li><a href="/Explore/Explore.html">Exploremore</a></li>
+            <li><a href="/Market/Market.html">Market</a></li>
+            <li><a href="/Features/Features.html">Features</a></li>
+            <li><a href="/News/News.html">Live News</a></li>
+            <li><a href="/AboutUs/AboutUs.html">About Us</a></li>
+        </ul>
+
+        <!-- Floating Particles -->
+        <div id="particles-wrapper"></div>
+
+        <!-- Add / Remove Coin Buttons -->
+        <div class="coin-actions">
+            <div class="dropdown">
+                <button id="add-coin-btn" class="btn">+ Add Coin</button>
+                <div class="dropdown-content" id="add-coin-dropdown"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1><span>PulseCrypto</span></h1>
+        <p>Real-time cryptocurrency monitoring dashboard with alerts.</p>
+    </div>
+
+    <!-- Coin List -->
+    <div class="coin-list">
+        <div class="coin" id="bitcoin-card">
+            <img src="/images/bitcoin.png">
+            <div>
+                <h3 id="bitcoin">$0</h3>
+                <p>Bitcoin</p>
+                <input type="number" class="alert-input" placeholder="Target Price" />
+                <button class="alert-btn">Set Alert</button>
+                <p class="change"></p>
+            </div>
+        </div>
+
+        <div class="coin" id="ethereum-card">
+            <img src="/images/ethereum.png">
+            <div>
+                <h3 id="ethereum">$0</h3>
+                <p>Ethereum</p>
+                <input type="number" class="alert-input" placeholder="Target Price" />
+                <button class="alert-btn">Set Alert</button>
+                <p class="change"></p>
+            </div>
+        </div>
+
+        <div class="coin" id="dogecoin-card">
+            <img src="/images/dogecoin.png">
+            <div>
+                <h3 id="dogecoin">$0</h3>
+                <p>Dogecoin</p>
+                <input type="number" class="alert-input" placeholder="Target Price" />
+                <button class="alert-btn">Set Alert</button>
+                <p class="change"></p>
+            </div>
+        </div>
+
+        <div class="coin" id="ripple-card">
+            <img src="/images/ripple.jpeg">
+            <div>
+                <h3 id="ripple">$0</h3>
+                <p>Ripple</p>
+                <input type="number" class="alert-input" placeholder="Target Price" />
+                <button class="alert-btn">Set Alert</button>
+                <p class="change"></p>
+            </div>
+        </div>
+
+        <div class="coin" id="litecoin-card">
+            <img src="/images/LITECOIN.png">
+            <div>
+                <h3 id="litecoin">$0</h3>
+                <p>Litecoin</p>
+                <input type="number" class="alert-input" placeholder="Target Price" />
+                <button class="alert-btn">Set Alert</button>
+                <p class="change"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Icon -->
+<div class="settings" id="settings">
+    <img src="/images/settings.png" alt="Settings">
+    <div class="settings-dropdown" id="settings-dropdown">
+        <button id="change-email-btn">Change Email</button>
+        <button id="logout-btn">Logout</button>
+    </div>
+</div>
+<!-- Bottom Left Logo -->
+<div class="bottom-left-logo">
+    <img src="images/mainlogo.png" alt="JC Logo">
+</div>
+
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script type="module" src="script.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
