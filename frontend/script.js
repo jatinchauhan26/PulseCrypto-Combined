@@ -11,10 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeEmailBtn = document.getElementById("change-email-btn");
     const logoutBtn = document.getElementById("logout-btn");
 
-    // Automatically switch between local backend and deployed backend
-const BACKEND_URL = window.location.hostname === "localhost" 
-    ? "http://localhost:3000"  // local backend
-    : "https://pulsecrypto-backend.onrender.com"; // replace with your Render URL
+const BACKEND_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:3000"
+    : "https://pulsecrypto-backend.onrender.com"; // no trailing slash
+
 
 
     // ---------------- Toast popup ----------------

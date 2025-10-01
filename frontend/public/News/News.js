@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const rightBtn = document.querySelector(".carousel-btn.right");
 
   // ---------------- BACKEND URL ----------------
-
-      const BACKEND_URL =
+const BACKEND_URL =
   window.location.hostname === "localhost"
     ? "http://localhost:3000"
     : "https://pulsecrypto-backend.onrender.com"; // no trailing slash
+
 
 
   // ---------------- Floating Particles ----------------

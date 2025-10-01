@@ -12,18 +12,28 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ---------------- Middleware ----------------
+const cors = require("cors");
+
 const FRONTEND_URLS = [
-    'https://pulse-crypto-frontend-x34v-gvt2feyk0.vercel.app',
-    'http://localhost:5500' // if you serve frontend locally
+    "https://pulse-crypto-frontend-x34v.vercel.app",
+    "http://localhost:5500"
 ];
 
+// Allow CORS for the frontend
 app.use(cors({
     origin: function(origin, callback) {
-        if (!origin || FRONTEND_URLS.includes(origin)) return callback(null, true);
-        callback(new Error('Not allowed by CORS'));
+        if (!origin || FRONTEND_URLS.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
     },
-    methods: ['GET', 'POST']
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+// Handle preflight OPTIONS requests for all routes
+app.options("*", cors());
+
 
 app.use(bodyParser.json());
 
