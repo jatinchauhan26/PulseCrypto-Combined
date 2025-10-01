@@ -12,14 +12,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ---------------- Middleware ----------------
-const cors = require("cors");
 
 const FRONTEND_URLS = [
     "https://pulse-crypto-frontend-x34v.vercel.app",
     "http://localhost:5500"
 ];
 
-// Allow CORS for the frontend
+// Universal CORS middleware
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin || FRONTEND_URLS.includes(origin)) {
@@ -31,22 +30,16 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// Handle preflight OPTIONS requests for all routes
+// Automatically handle OPTIONS preflight for all routes
 app.options("*", cors());
 
-
+// Body parser
 app.use(bodyParser.json());
 
 // Serve public and frontend folders
-
 app.use(express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, "../frontend"))); // serve index.html and assets
-app.use(express.static(path.join(__dirname, "../frontend/public"))); // public assets
-
-
-// app.use(express.static(path.join(__dirname, "public")));   // Public assets
-// app.use(express.static(path.join(__dirname, "frontend"))); // SPA frontend
-// app.use(express.static(path.join(__dirname, "frontend", "public")));
+app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend/public")));
 
 // ---------- Helper: validate email ----------
 function isValidEmail(email) {
@@ -55,7 +48,14 @@ function isValidEmail(email) {
 }
 
 // ---------- POST route for sending alerts ----------
-app.post("/send-alert", (req, res) => {
+app.post("/send-alert", cors({
+    origin: function(origin, callback) {
+        if (!origin || FRONTEND_URLS.includes(origin)) return callback(null, true);
+        return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}), (req, res) => {
     const { coin, currentPrice, targetPrice, userEmail } = req.body;
     if (!coin || !currentPrice || !targetPrice || !userEmail) {
         return res.status(400).json({ message: "Missing data" });
@@ -78,8 +78,11 @@ app.post("/send-alert", (req, res) => {
     };
 
     sgMail.send(msg)
-      .then(() => res.json({ message: `Email sent to ${userEmail}` }))
-      .catch(error => res.status(500).json({ message: "Email sending failed", error }));
+        .then(() => res.json({ message: `Email sent to ${userEmail}` }))
+        .catch(error => {
+            console.error("SendGrid error:", error);
+            res.status(500).json({ message: "Email sending failed", error });
+        });
 });
 
 // ---------- Crypto News Endpoint (RSS) ----------
@@ -106,13 +109,14 @@ app.get("/api/news", async (req, res) => {
         cacheTimestamp = now;
         res.json(news);
     } catch (error) {
+        console.error("RSS fetch error:", error);
         res.status(500).json({ error: "Failed to fetch news" });
     }
 });
 
 // ---------- Catch-all SPA route (must be last) ----------
 app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/index.html")); // main HTML
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // ---------- Start server ----------
