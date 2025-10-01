@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 // Add all valid frontends here
 const FRONTEND_URLS = [
-  "https://pulse-crypto-frontend-x34v.vercel.app",  // ✅ Vercel frontend
+  "https://pulsecrypto.vercel.app",  // ✅ Vercel frontend
   "http://localhost:5500",                           // ✅ Local HTML/CSS testing
   "http://localhost:3000", 
    "http://localhost:5173",                        // ✅ Local fullstack testing
@@ -34,6 +34,10 @@ const corsOptions = {
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 };
+app.post("/register-session", (req, res) => {
+    res.json({ message: "User session registered, backend active!" });
+});
+
 app.use(cors(corsOptions));
 
 // Automatically handle OPTIONS preflight for all routes

@@ -17,6 +17,31 @@ const BACKEND_URL =
     : "https://pulsecrypto-backend.onrender.com"; // no trailing slash
 
 
+// ---------------- Register user session ----------------
+let backendAwake = false;
+
+function registerUserSession() {
+    if (backendAwake) return; // already active
+
+    fetch(`${BACKEND_URL}/register-session`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Backend active:", data.message);
+            backendAwake = true;
+        })
+        .catch(err => console.warn("Backend not reachable yet:", err));
+}
+
+// Call on page load
+window.addEventListener("load", () => {
+    registerUserSession();
+});
+
+// ---------------- Rest of your script ----------------
+// Toasts, overlay, coins, WebSockets, alerts, etc.
+
+
+
 
     // ---------------- Toast popup ----------------
     function showToast(message, duration = 5000) {
