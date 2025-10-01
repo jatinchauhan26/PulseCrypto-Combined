@@ -764,8 +764,8 @@ body, html {
 .bottom-left-logo {
     position: fixed;
     bottom: 20px;
-    left: 50px; /* distance from left */
-    z-index: 10000;
+    left: 50px; 
+    z-index: 5000; 
     cursor: pointer;
 }
 
