@@ -217,31 +217,33 @@ const BACKEND_URL =
     Object.keys(coins).forEach(key => attachCoinFunctions(coins[key].el, key));
 
     // ---------------- WebSocket ----------------
-    function triggerCoinAlert(coinId, priceNum, target) {
-        if (firedAlerts[coinId]) return; // prevent double firing
-        firedAlerts[coinId] = true;
-        delete alerts[coinId]; // remove immediately
+function triggerCoinAlert(coinId, priceNum, target) {
+    if (firedAlerts[coinId]) return; // prevent double firing
+    firedAlerts[coinId] = true;
+    delete alerts[coinId]; // remove immediately
 
-        if (window.userEmail) {
-   fetch(`${BACKEND_URL}/send-alert`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        coin: coinId,
-        currentPrice: priceNum,
-        targetPrice: target,
-        userEmail: window.userEmail
-    })
-})
-.catch(err => console.error(err));
+    if (window.userEmail) {
+        fetch(`${BACKEND_URL}/send-alert`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                coin: coinId,
+                currentPrice: priceNum,
+                targetPrice: target,
+                userEmail: window.userEmail
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log("Alert sent:", data))
+        .catch(err => console.error("Error sending alert:", err));
 
-
-            showToast(`${coinId} reached $${priceNum}! Email sent to ${window.userEmail}`);
-        } else {
-            showToast(`${coinId} reached $${priceNum}! \n Set your email in the overlay to receive alerts.`);
-            emailAlertShown = true;
-        }
+        showToast(`${coinId} reached $${priceNum}! Email sent to ${window.userEmail}`);
+    } else {
+        showToast(`${coinId} reached $${priceNum}! \n Set your email in the overlay to receive alerts.`);
+        emailAlertShown = true;
     }
+}
+
 
     function connectCoinWS(coinId) {
         const coin = coins[coinId];

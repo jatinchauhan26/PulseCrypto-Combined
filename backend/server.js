@@ -4,7 +4,6 @@ const cors = require("cors");
 const path = require("path");
 const Parser = require("rss-parser");
 require("dotenv").config();
-
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -13,30 +12,37 @@ const PORT = process.env.PORT || 3000;
 
 // ---------------- Middleware ----------------
 
+// Add all valid frontends here
 const FRONTEND_URLS = [
-    "https://pulse-crypto-frontend-x34v.vercel.app",
-    "http://localhost:5500"
+  "https://pulse-crypto-frontend-x34v.vercel.app",  // ✅ Vercel frontend
+  "http://localhost:5500",                           // ✅ Local HTML/CSS testing
+  "http://localhost:3000", 
+   "http://localhost:5173",                        // ✅ Local fullstack testing
 ];
 
-// Universal CORS middleware
-app.use(cors({
-    origin: function(origin, callback) {
+
+// CORS setup
+const corsOptions = {
+    origin: function (origin, callback) {
         if (!origin || FRONTEND_URLS.includes(origin)) {
-            return callback(null, true);
+            callback(null, true);
+        } else {
+            console.warn(`❌ CORS blocked origin: ${origin}`);
+            callback(new Error("Not allowed by CORS"));
         }
-        return callback(new Error("Not allowed by CORS"));
     },
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
-}));
+};
+app.use(cors(corsOptions));
 
 // Automatically handle OPTIONS preflight for all routes
-app.options("*", cors());
+app.options(/.*/, cors(corsOptions));
 
 // Body parser
 app.use(bodyParser.json());
 
-// Serve public and frontend folders
+// Serve static frontend
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use(express.static(path.join(__dirname, "../frontend/public")));
@@ -48,14 +54,7 @@ function isValidEmail(email) {
 }
 
 // ---------- POST route for sending alerts ----------
-app.post("/send-alert", cors({
-    origin: function(origin, callback) {
-        if (!origin || FRONTEND_URLS.includes(origin)) return callback(null, true);
-        return callback(new Error("Not allowed by CORS"));
-    },
-    methods: ["POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}), (req, res) => {
+app.post("/send-alert", cors(corsOptions), (req, res) => {
     const { coin, currentPrice, targetPrice, userEmail } = req.body;
     if (!coin || !currentPrice || !targetPrice || !userEmail) {
         return res.status(400).json({ message: "Missing data" });
@@ -114,10 +113,10 @@ app.get("/api/news", async (req, res) => {
     }
 });
 
-// ---------- Catch-all SPA route (must be last) ----------
+// ---------- Catch-all SPA route ----------
 app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // ---------- Start server ----------
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
