@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const BACKEND_URL =
     window.location.hostname === "localhost"
       ? "http://localhost:3000" // local backend
-      : "https://your-backend-on-render.onrender.com"; // deployed backend
+      : "https://pulsecrypto-backend.onrender.com/"; // deployed backend
 
   // ---------------- Floating Particles ----------------
   const particlesWrapper = document.getElementById("particles");
