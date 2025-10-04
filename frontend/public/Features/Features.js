@@ -18,17 +18,30 @@ document.addEventListener("DOMContentLoaded", () => {
             p.classList.add("particle");
             p.style.top = Math.random() * 100 + "vh";
             p.style.left = Math.random() * 100 + "vw";
-            p.style.animationDuration = (10 + Math.random() * 20) + "s";
-            p.style.animationDelay = (Math.random() * 20) + "s";
+            p.style.animationDuration = (10 + Math.random() * 100) + "s";p.style.animationDuration = (4 + Math.random() * 8) + "s";
+         p.style.animationDelay = (Math.random() * 20) + "s";
             container.appendChild(p);
         }
     }
 
     // ---------------- Coins & Portfolio ----------------
-    const newCoins = {
-        BTC: { symbol: "btcusdt", img: "bitcoin.png" },
+ 
+     const newCoins = {
+         BTC: { symbol: "btcusdt", img: "bitcoin.png" },
         ETH: { symbol: "ethusdt", img: "ethereum.png" },
         DOGE: { symbol: "dogeusdt", img: "dogecoin.png" },
+        algorand:  { symbol: "algousdt",  decimals: 6, img: "algorand.png" },
+        avalanche: { symbol: "avaxusdt",  decimals: 3, img: "avalanche.png" },
+        bnb:       { symbol: "bnbusdt",   decimals: 2, img: "bnb.png" },
+        cardano:   { symbol: "adausdt",   decimals: 4, img: "cardano.png" },
+        chainlink: { symbol: "linkusdt",  decimals: 4, img: "chainlink.png" },
+        cosmos:    { symbol: "atomusdt",  decimals: 4, img: "cosmos.png" },
+        filecoin:  { symbol: "filusdt",   decimals: 4, img: "filecoin.png" },
+        polkadot:  { symbol: "dotusdt",   decimals: 4, img: "polkadot.png" },
+        solana:    { symbol: "solusdt",   decimals: 4, img: "solana.png" },
+        tron:      { symbol: "trxusdt",   decimals: 6, img: "tron.png" },
+        uniswap:   { symbol: "uniusdt",   decimals: 4, img: "uniswap.png" },
+        vechain:   { symbol: "vetusdt",   decimals: 4, img: "vechain.png" }
     };
     const portfolio = [];
 

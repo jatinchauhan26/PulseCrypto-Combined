@@ -124,6 +124,7 @@ nav .btn:hover { background: #ff960b; color: #fff; }
 .feature-item h3 { color: #ff960b; font-size: 22px; }
 .feature-item p { color: #ccc; font-size: 16px; }
 
+/* ================= Add Coin Dropdown (2-row layout) ================= */
 /* ================= Add Coin Dropdown ================= */
 .add-coin-wrapper {
     position: relative;
@@ -131,6 +132,7 @@ nav .btn:hover { background: #ff960b; color: #fff; }
     margin-bottom: 30px;
     z-index: 1000; /* ensures above particles/background */
 }
+
 #add-coin-btn {
     background: linear-gradient(135deg,#ff960b,#ff4d00);
     color: #fff;
@@ -141,28 +143,36 @@ nav .btn:hover { background: #ff960b; color: #fff; }
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(255,150,11,0.4);
     transition: 0.3s;
-    z-index: 1000;
 }
+
 #add-coin-btn:hover {
     background: linear-gradient(135deg,#ffb84d,#ff6600);
     transform: scale(1.05);
 }
+
 #add-coin-dropdown {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 50px;                     /* below button */
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,0,0,0.85);
+    min-width: 200px;              /* ensures width */
+    background: rgba(78, 29, 123, 0.85);
     border-radius: 15px;
-    padding: 10px;
-    min-width: 200px;
     box-shadow: 0 6px 20px rgba(255,150,11,0.5);
-    z-index: 1001; /* must be above wrapper */
+    z-index: 1001;                 /* above wrapper */
+    margin: 0;                      /* remove extra margin */
+    padding: 0;                     /* remove extra padding */
 }
-.dropdown.show { display: block; }
+
+#add-coin-dropdown.show {
+    display: flex;                 /* use flex for two rows */
+    flex-wrap: wrap;               /* wrap items to next row if needed */
+    justify-content: center;       /* center items */
+}
+
 .dropdown-item {
-    padding: 8px 15px;
+    padding: 8px 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -170,16 +180,19 @@ nav .btn:hover { background: #ff960b; color: #fff; }
     color: #fff;
     transition: 0.3s;
     border-radius: 8px;
+    background: none;              /* remove default bg */
+    margin: 4px;                   /* spacing between items */
 }
+
 .dropdown-item:hover {
     background: rgba(255,150,11,0.3);
     transform: scale(1.05);
 }
-.dropdown-item img { width: 25px; height: 25px; }
-#add-coin-dropdown {
-    z-index: 1000; /* above particles */
+
+.dropdown-item img {
+    width: 25px;
+    height: 25px;
 }
-.add-coin-wrapper { z-index: 1001; position: relative; }
 
 
 /* ================= Coin Cards ================= */
@@ -254,25 +267,5 @@ nav .btn:hover { background: #ff960b; color: #fff; }
 }
 
 @media(max-width:768px) {
-    .charts {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-#add-coin-dropdown {
-    display: none;                /* hidden by default */
-    position: absolute;
-    top: 50px;                     /* below button */
-    left: 50%;
-    transform: translateX(-50%);
-    min-width: 200px;              /* ensures width */
-    padding: 10px;
-    background: rgba(0,0,0,0.85);
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(255,150,11,0.5);
-    z-index: 1001;                 /* above wrapper */
-}
-
-#add-coin-dropdown.show {
-    display: block;                /* toggle visibility via JS */
+    .charts { flex-direction: column; align-items: center; }
 }

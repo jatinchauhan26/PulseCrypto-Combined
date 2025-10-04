@@ -1,0 +1,238 @@
+/* ----------------- Global ----------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* ----------------- Animated Background ----------------- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(270deg, #1e1e1e, #2e2b28, #1a3d3d, #2b2c4a);
+    background-size: 800% 800%;
+    z-index: -2;
+    animation: bgGradientShift 30s ease infinite;
+}
+
+@keyframes bgGradientShift {
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 50% 50%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ----------------- Navbar ----------------- */
+nav {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.logo { width: 50px; margin-right: 20px; }
+
+nav ul {
+    flex: 1;
+    display: flex;
+    list-style: none;
+}
+
+nav ul li { margin: 0 12px; }
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    color: #00ffe1;
+}
+
+nav .btn {
+    color: #00ffe1;
+    text-decoration: none;
+    border: 1px solid #00ffe1;
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: rgba(0,255,225,0.1);
+    transition: all 0.3s;
+}
+
+nav .btn:hover {
+    background: rgba(0,255,225,0.3);
+    color: #fff;
+}
+
+/* ----------------- Support Form Container ----------------- */
+/* ----------------- Support Form Container ----------------- */
+.support-container {
+    max-width: 650px; /* slightly smaller width */
+    margin: 12px auto; /* adjust top/bottom spacing */
+    padding: 25px;     /* slightly smaller padding */
+    border-radius: 16px;
+    color: #fff;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0,255,225,0.3);
+    background: linear-gradient(270deg, #283731, #452e23, #2b2c4a, #4a382c);
+    background-size: 800% 800%;
+    animation: containerGradientShift 25s ease infinite;
+    position: relative;
+    overflow: hidden; /* for wave effect */
+}
+
+
+@keyframes containerGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.support-container h1 {
+    font-size: 42px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.support-container p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+/* ----------------- Form Elements ----------------- */
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ----------------- Inputs, Textarea & Select Unified ----------------- */
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;  /* text inside input/select */
+    outline: none;
+    background: linear-gradient(270deg,#2e3b36, #4a382c, #3e2c23);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    appearance: none;
+    position: relative;
+}
+
+/* ----------------- Focus/Active Effect ----------------- */
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border: 2px solid #00ffe1;
+    background: linear-gradient(270deg, #5a4533, #4a382c, #3b2f24);
+    color: #fff; /* keep text consistent */
+}
+
+
+/* ----------------- Floating Particles ----------------- */
+#particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0,255,255,0.5);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+    0%   { transform: translate(0,0) scale(1); opacity: 1; }
+    50%  { transform: translate(200px, -300px) scale(1.5); opacity: 0.6; }
+    100% { transform: translate(-200px, -600px) scale(0.5); opacity: 0; }
+}
+
+/* ----------------- Dropdown Specific Styling ----------------- */
+form select {
+    background-size: 800% 800%;
+    animation: selectGradientShift 8s ease infinite;
+}
+
+/* Shiny gradient animation for select */
+@keyframes selectGradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Options inside select */
+form select option {
+    background: linear-gradient(270deg, #5a4533, #4a382c, #3b2f24);
+    color: #000;
+}
+
+/* Custom arrow for select */
+form select::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #fff;
+}
+
+/* ----------------- Button ----------------- */
+form button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3e2c23, #2e3b36, #2b2c4a, #4a382c);
+    background-size: 800% 800%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,255,225,0.3);
+}
+
+/* ----------------- Status ----------------- */
+#form-status {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+}
