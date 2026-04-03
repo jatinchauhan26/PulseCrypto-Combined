@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support - Crypto Tracker</title>
+  <link rel="stylesheet" href="Support.css">
+ <!-- In your HTML head or before closing </body> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+      <img src="/images/logo.png" class="logo" alt="Logo">
+      <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/Market/Market.html">Market</a></li>
+          <li><a href="/Features/Features.html">Features</a></li>
+          <li><a href="/News/News.html">Live News</a></li>
+          <li><a href="/Support.html" class="active">Support</a></li>
+      </ul>
+  </nav>
+
+   <!-- Floating Particles -->
+  <div id="particles"></div>
+
+  <!-- Support Section -->
+  <div class="support-container">
+    <h1>Support</h1>
+    <p>Facing issues with the Crypto Price Tracker? Let us know below.</p>
+
+    <form id="support-form">
+      <!-- Name -->
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <!-- Email -->
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <!-- Issue Type -->
+      <label for="issue">Issue Type</label>
+      <select id="issue" name="issue" required>
+        <option value="">-- Select an Issue --</option>
+        <option value="price">Price Not Updating</option>
+        <option value="alert">Alert Not Triggering</option>
+        <option value="login">Login / Account Issue</option>
+        <option value="ui">UI / Display Problem</option>
+        <option value="feature">Feature Request</option>
+        <option value="other">Other</option>
+      </select>
+
+      <!-- Message -->
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Describe your issue..." required></textarea>
+
+      <!-- Submit -->
+      <button type="submit">Send</button>
+    </form>
+
+    <div id="form-status"></div>
+  </div>
+
+  <!-- Background Animation -->
+  <div class="bg-animation"></div>
+
+  <!-- Script -->
+ <script type="module" src="Support.js"></script>
+
+</body>
+</html>

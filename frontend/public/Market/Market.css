@@ -1,0 +1,204 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: #fff;
+}
+
+.market-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 5%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 50px;
+    margin-right: 20px;
+}
+
+nav ul {
+    flex: 1;
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #3498db;
+}
+
+nav .btn {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+nav .btn:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+.market-header {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.market-header h1 {
+    font-size: 48px;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.market-header p {
+    font-size: 18px;
+    color: #b0b0b0;
+}
+
+.market-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.market-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.market-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.market-card p {
+    font-size: 16px;
+    color: #b0b0b0;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .market-container {
+        padding: 20px 3%;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    nav .btn {
+        margin-top: 10px;
+        padding: 6px 15px;
+    }
+
+    .market-header h1 {
+        font-size: 32px;
+    }
+
+    .market-header p {
+        font-size: 14px;
+    }
+
+    .market-card {
+        min-width: 100%;
+        padding: 15px;
+    }
+
+    .market-card h3 {
+        font-size: 18px;
+    }
+
+    .market-card p {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .market-container {
+        padding: 20px 4%;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav ul li a {
+        font-size: 15px;
+    }
+
+    .market-header h1 {
+        font-size: 40px;
+    }
+
+    .market-header p {
+        font-size: 16px;
+    }
+
+    .market-card {
+        max-width: 45%;
+    }
+}
+
+@media (min-width: 1024px) {
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    .market-header h1 {
+        font-size: 48px;
+    }
+
+    .market-header p {
+        font-size: 18px;
+    }
+
+    .market-card {
+        max-width: 300px;
+    }
+}
